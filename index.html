@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <script>
+            const base = "https://apiv3.fansly.com/api/v1";
+            var goal = 0;
+            function getGoals() {
+                fetch(base+"/chatrooms?ids=434932921581711360")
+                    .then(data=>data.json())
+                    .then(data => {
+                        // Get Current Amount Donated
+                        goal = data["response"][0]["activeGoals"][0]["currentAmount"]/1000;    
+                        console.log(goal);
+                        document.getElementById("timer").innerHTML = goal;
+                    })
+                    .error(error => document.getElementById("timer").innerHTML = error)
+            }
+
+            function main() {
+                getGoals()
+                setInterval(getGoals, 1000)
+            }     
+        </script>
+    </head>
+    <body onload="main()">
+        <div id="timer">test!</div>
+    </body>
+</html>
